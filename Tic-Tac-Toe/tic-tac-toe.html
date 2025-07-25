@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tic-Tac-Toe</title>
+<style>
+body {
+  font-family: sans-serif;
+  background-color:green; /* Light gray background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-gap: 5px;
+  border: 2px solid #333;
+  padding: 10px;
+  background-color: #fff; /* White board background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Add a subtle shadow */
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ccc;
+  font-size: 4em;
+  text-align: center;
+  line-height: 100px; /* Vertically center text */
+  cursor: pointer;
+  background-color: #eee; /* Light gray cell background */
+  border-radius: 4px;
+  transition: background-color 0.2s; /* Smooth background transition */
+}
+.cell:hover {
+  background-color: #ddd;
+}
+
+#message {
+  margin-top: 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+</style>
+</head>
+<body>
+
+<h1>Tic-Tac-Toe</h1>
+
+<div id="board">
+</div>
+
+<div id="message"></div>
+<button onclick="resetGame()">Reset Game</button>
+
+<script>
+let board = document.getElementById('board');
+let message = document.getElementById('message');
+let cells = [];
+let currentPlayer = 'X';
+let gameWon = false;
+
+function createBoard() {
+  for (let i = 0; i < 9; i++) {
+    let cell = document.createElement('div');
+    cell.classList.add('cell');
+    cell.dataset.index = i;
+    cell.addEventListener('click', cellClick);
+    board.appendChild(cell);
+    cells.push(cell);
+  }
+}
+
+function cellClick(event) {
+    if (gameWon) return; // Prevent clicks after the game is won
+  let cell = event.target;
+  if (cell.textContent === '') {
+    cell.textContent = currentPlayer;
+    if (checkWin()) {
+      message.textContent = `Player ${currentPlayer} wins!`;
+      gameWon = true;
+      return;
+    }
+    if (checkDraw()){
+      message.textContent = "It's a draw!";
+      return;
+    }
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    message.textContent = `Player ${currentPlayer}'s turn`;
+  }
+}
+
+function checkWin() {
+  const winPatterns = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+    [0, 4, 8], [2, 4, 6]             // Diagonals
+  ];
+
+  for (let pattern of winPatterns) {
+    let [a, b, c] = pattern;
+    if (cells[a].textContent &&
+        cells[a].textContent === cells[b].textContent &&
+        cells[a].textContent === cells[c].textContent) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function checkDraw(){
+    for(let cell of cells){
+        if(cell.textContent == ""){
+            return false;
+        }
+    }
+    return true;
+}
+
+function resetGame() {
+    gameWon = false;
+  for (let cell of cells) {
+    cell.textContent = '';
+  }
+  currentPlayer = 'X';
+  message.textContent = "Player X's turn";
+}
+
+createBoard();
+message.textContent = "Player X's turn";
+</script>
+
+</body>
+</html>

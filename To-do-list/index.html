@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <style>
+        body {
+            background-color: green;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            width: 300px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="task" placeholder="New Task">
+        <input type="datetime-local" id="datetime">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            let task = document.getElementById('task').value;
+            let datetime = document.getElementById('datetime').value;
+            if (task && datetime) {
+                let li = document.createElement('li');
+                li.textContent = `${task} - ${new Date(datetime).toLocaleString()}`;
+                document.getElementById('taskList').appendChild(li);
+                document.getElementById('task').value = '';
+                document.getElementById('datetime').value = '';
+            } else {
+                alert('Please enter both task and datetime.');
+            }
+        }
+    </script>
+</body>
+</html>

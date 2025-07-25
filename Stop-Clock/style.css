@@ -1,0 +1,27 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffa726; /* Orange background */
+    font-family: Arial, sans-serif;
+}
+
+.stopwatch {
+    background: #ffffff; /* White background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#display {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.buttons button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
